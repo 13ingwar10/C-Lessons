@@ -1,4 +1,4 @@
-﻿void Zadacha10 () {
+﻿﻿void Zadacha10 () {
     Random rand = new Random();
     int number = rand.Next(100, 1000);
     int first = 0;
