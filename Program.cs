@@ -1,47 +1,63 @@
-﻿﻿void Zadacha10 () {
-    Random rand = new Random();
-    int number = rand.Next(100, 1000);
-    int first = 0;
-    int second = 0;
+﻿void Zadacha19() {
 
+    int[] array = new int[5];
+    Random rand = new Random();
+    int number = rand.Next(10000, 100000);
+ //   int number = 53835;
     Console.WriteLine(number);
-    first = number/100;
-    second = (number - first*100)/10;
-    Console.WriteLine(second);
+
+    array[0] = number/10000;
+    array[1] = (number/1000)%10;
+    array[3] = (number%100)/10;
+    array[4] = number%10;
+
+    if (array[0]==array[4] && array[1]==array[3]) {
+        Console.WriteLine("Число - палиндром");
+    } else Console.WriteLine("Число - не палиндром");
+
 }
 
-void Zadacha13() {
+void Zadacha21() {
+    double distance = 0;
+
+    double[] dot_one = new double[3];
+    double[] dot_two = new double[3];
+
     Random rand = new Random();
-    int number = rand.Next(10, 10000);
-    Console.WriteLine(number);
 
-// Делаем проверку на наличие третьей цифры и превращаем любое число в трехзначное
-    if (number/100 == 0) {
-        Console.WriteLine("Третьй цифры нет");
-    } else {
-        while (number > 999) {
-            number = number/10;
-        }
-
-// Получаем третью цирфу числа
-    int first = number/100;
-    int second = number - first*100;
-    int third = second%10;
-    Console.WriteLine(third);
+    for (int i=0; i<dot_one.Length; i++) {
+        dot_one[i] = rand.Next(-99, 100);
+        dot_two[i] = rand.Next(-99, 100);
     }
 
+    Console.WriteLine($"Первая точка: {dot_one[0]}, {dot_one[1]}, {dot_one[2]}");
+    Console.WriteLine($"Вторая точка: {dot_two[0]}, {dot_two[1]}, {dot_two[2]}");
+
+    distance = Math.Pow((Math.Pow(dot_one[0]-dot_two[0],2) + Math.Pow(dot_one[1]-dot_two[1], 2) + Math.Pow(dot_one[2]-dot_two[2], 2)), 0.5);
+
+    Console.WriteLine($"Расстояние между точками = {distance}");
+
 }
 
-void  Zadacha15() {
+void Zadacha23() {
+
     Random rand = new Random();
-    int number = rand.Next(1,8);
-    Console.WriteLine(number);
+    int number = rand.Next(1, 10);
+    int square = 0;
 
-    if (number>5) {
-        Console.WriteLine("Выходной день");
-    } else Console.WriteLine("Будний день");
+    Console.WriteLine($"Число: {number}");
+
+    for (int i = 1; i<=number;i++) {
+        if (i == number) {
+            square = i*i*i;
+            Console.WriteLine(square);
+        } else {
+            square = i*i*i;
+            Console.Write($"{square}, ");
+        }
+    }
 }
 
-//Zadacha10();
-//Zadacha13();
-Zadacha15();
+//Zadacha19();
+//Zadacha21();
+Zadacha23();
