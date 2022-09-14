@@ -1,63 +1,88 @@
-﻿void Zadacha19() {
+﻿int Zadacha25(int number, int degree) {
 
-    int[] array = new int[5];
-    Random rand = new Random();
-    int number = rand.Next(10000, 100000);
- //   int number = 53835;
-    Console.WriteLine(number);
+    // Используя определение степени числа, напишите цикл, который принимает на вход два натуральных числа (A и B) и возводит число A в степень B.
+    int result = number;
 
-    array[0] = number/10000;
-    array[1] = (number/1000)%10;
-    array[3] = (number%100)/10;
-    array[4] = number%10;
-
-    if (array[0]==array[4] && array[1]==array[3]) {
-        Console.WriteLine("Число - палиндром");
-    } else Console.WriteLine("Число - не палиндром");
-
-}
-
-void Zadacha21() {
-    double distance = 0;
-
-    double[] dot_one = new double[3];
-    double[] dot_two = new double[3];
-
-    Random rand = new Random();
-
-    for (int i=0; i<dot_one.Length; i++) {
-        dot_one[i] = rand.Next(-99, 100);
-        dot_two[i] = rand.Next(-99, 100);
+    for (int i = 1; i < degree; i++) {
+        result *= number;
     }
 
-    Console.WriteLine($"Первая точка: {dot_one[0]}, {dot_one[1]}, {dot_one[2]}");
-    Console.WriteLine($"Вторая точка: {dot_two[0]}, {dot_two[1]}, {dot_two[2]}");
-
-    distance = Math.Pow((Math.Pow(dot_one[0]-dot_two[0],2) + Math.Pow(dot_one[1]-dot_two[1], 2) + Math.Pow(dot_one[2]-dot_two[2], 2)), 0.5);
-
-    Console.WriteLine($"Расстояние между точками = {distance}");
-
+    return result;
 }
 
-void Zadacha23() {
+int Zadacha27(int number) {
 
+    // Напишите программу, которая принимает на вход число и выдаёт сумму цифр в числе.
+    int sum = 0;
+    while (number > 0) {
+        sum = sum+number%10;
+        number = number/10;
+    }
+
+    return sum;
+}
+
+void Zadacha29() {
+    int length = 8;
+    int[] arr = new int[length];
     Random rand = new Random();
-    int number = rand.Next(1, 10);
-    int square = 0;
 
-    Console.WriteLine($"Число: {number}");
+    
+    Console.WriteLine("Выведем стартовый массив:");
+    for (int i = 0; i < arr.Length; i++) {
+        arr[i] = rand.Next(-100, 101);
+        Console.Write($"{arr[i]}, ");
+    }
+    Console.WriteLine();
 
-    for (int i = 1; i<=number;i++) {
-        if (i == number) {
-            square = i*i*i;
-            Console.WriteLine(square);
-        } else {
-            square = i*i*i;
-            Console.Write($"{square}, ");
+    Console.WriteLine("Выведем отсортированный массив:");
+    int min = arr[0];
+    int bar = arr[0];
+    int index = 0;
+
+    for (int i = 0; i < arr.Length - 1; i++) {
+        min = arr[i];
+        bar = arr[i];
+        index = i;
+        for (int j = i + 1; j < arr.Length; j++) {
+            if (Math.Abs(arr[j]) < Math.Abs(min)) {
+                min = arr[j];
+                index = j;
+            }
         }
+        arr[i] = min;
+        arr[index] = bar;
     }
+
+    for (int i = 0; i < arr.Length; i++) {
+        Console.Write($"{arr[i]}, ");
+    }
+
 }
 
-//Zadacha19();
-//Zadacha21();
-Zadacha23();
+
+Console.WriteLine("Начинаем выполнение задачи №25 - Используя определение степени числа, напишите цикл, который принимает на вход два натуральных числа (A и B) и возводит число A в степень B.");
+Console.WriteLine("Введите число A");
+int number = Convert.ToInt32(Console.ReadLine());
+while (number <=0) {
+    Console.WriteLine("Ошибка! Вы должны ввести натуральное число");
+    number = Convert.ToInt32(Console.ReadLine());
+}
+Console.WriteLine("Введите степень B");
+int degree = Convert.ToInt32(Console.ReadLine());
+while (degree <=0) {
+    Console.WriteLine("Ошибка! Вы должны ввести натуральное число");
+    degree = Convert.ToInt32(Console.ReadLine());
+}
+Console.WriteLine("Ответ на задачу №25 = " + Zadacha25(number, degree));
+Console.WriteLine();
+
+Console.WriteLine("Начинаем выполенение задачи №27 - Напишите программу, которая принимает на вход число и выдаёт сумму цифр в числе.");
+Console.WriteLine("Введите число");
+int number1 = Convert.ToInt32(Console.ReadLine());
+Zadacha27(number1);
+Console.WriteLine("Ответ на задачу №27 = " + Zadacha27(number1));
+Console.WriteLine();
+
+Console.WriteLine("Начинаем выполенение задачи №29 - Напишите программу, которая задаёт массив из 8 случайных целых чисел и выводит отсортированный по модулю массив.");
+Zadacha29();
