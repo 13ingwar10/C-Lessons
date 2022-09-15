@@ -42,8 +42,19 @@ void FillArrayDouble(double[] arr) {
 }
 
 void Sum(double[] arr){
-    double substraction = arr[0] + arr[arr.Length-1];
-    Console.WriteLine($"Cумма первого и последнего элементов массива = {Math.Round(substraction, 2)}");
+    //double substraction = arr[0] + arr[arr.Length-1];
+    double substraction = 0;
+    double min = arr[0];
+    double max = arr[0];
+    for (int i = 1; i < arr.Length; i++) {
+        if (arr[i] < min) {
+            min = arr[i];
+        } else if (arr[i] > max) {
+            max = arr[i];
+        }
+    }
+    substraction = max-min;
+    Console.WriteLine($"Разница между максимальным и минимальным элементом масссива = {Math.Round(substraction, 2)}");
 }
 
 void PrintArrayDouble(double[] arr) {
