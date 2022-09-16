@@ -3,6 +3,7 @@
     int[] arr = CreateArray();
     PrintArray(arr);
     Console.WriteLine($"В вашем массиве {CountPositive(arr)} чисел больше 0");
+    Console.WriteLine();
 }
 
 void Zadacha43() {
