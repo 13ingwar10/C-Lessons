@@ -10,16 +10,20 @@ void Zadacha43() {
     Console.WriteLine("Задача 43. Напишите программу, которая найдёт точку пересечения двух прямых, заданных уравнениями y = k1 * x + b1, y = k2 * x + b2; значения b1, k1, b2 и k2 задаются пользователем.");
     Console.WriteLine("Задайте через Enter коэффициенты b и k для первой прямой");
     double[] FirstStraight = CreateStraights();
-        Console.WriteLine("Задайте через Enter коэффициенты b и k для второй прямой");
+    Console.WriteLine("Задайте через Enter коэффициенты b и k для второй прямой");
     double[] SecondStraight = CreateStraights();
     SolveEquation(FirstStraight, SecondStraight);
 }
 
 void SolveEquation(double[] arr1, double[] arr2){
+    if (arr1[0] == arr2[0]) {
+        Console.WriteLine("Эти прямые - параллельны");
+    } else {
     double[] ArrayXY = new double[2];
     ArrayXY[0] = (arr2[1] - arr1[1]) / (arr1[0] - arr2[0]);
     ArrayXY[1] = arr1[0]*ArrayXY[0]+arr1[1];
     Console.WriteLine($"Прямые пересекутся в точке:({ArrayXY[0]};{ArrayXY[1]})");
+    }
 }
 
 double[] CreateStraights() {
