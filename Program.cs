@@ -31,7 +31,6 @@ void CountAverage(int[,] array) {
             sum += array[j,i];
         }
         average = (double)sum/array.GetLength(0);
-        Console.WriteLine(sum);
         Console.WriteLine($"Среднее арифметическое элементов столбца №{i+1} = {Math.Round(average, 2)}");
     }
     PrintArrayInt(array);    
