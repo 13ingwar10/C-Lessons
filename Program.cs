@@ -1,56 +1,101 @@
-﻿void Zadacha47() {
-    Console.WriteLine("Задача 47. Задайте двумерный массив размером m×n, заполненный случайными вещественными числами.");
-    PrintArrayDouble(CreateUserArray());
-    Console.WriteLine();
-}
-
-void Zadacha50() {
-    Console.WriteLine("Задача 50. Напишите программу, которая на вход принимает позиции элемента в двумерном массиве, и возвращает значение этого элемента или же указание, что такого элемента нет.");
-    var rand = new Random();
-    int[,] array = new int[rand.Next(0, 10),rand.Next(0, 10)];
-    FillArray(array);
-    CheckPosition(array);
-    Console.WriteLine(); 
-}
-
-void Zadacha52() {
-    Console.WriteLine("Задача 52. Задайте двумерный массив из целых чисел. Найдите среднее арифметическое элементов в каждом столбце.");
+﻿void Zadacha54() {
+    Console.WriteLine("Задача 54. Задайте двумерный массив. Напишите программу, которая упорядочит по убыванию элементы каждой строки двумерного массива.");
     var rand = new Random();
     int[,] array = new int[rand.Next(2, 10),rand.Next(2, 10)];
     FillArray(array);
-    CountAverage(array);
-    Console.WriteLine(); 
+    PrintArrayInt(array);
+    Console.WriteLine("Сортируем элементы строк max -> min");  
+    SortMaxToMin(array);
+    PrintArrayInt(array);
+    Console.WriteLine();   
 }
 
-void CountAverage(int[,] array) {
-    int sum = 0;
-    double average = 0;
-    for (int i =0; i < array.GetLength(1); i++) {
-        sum = 0;
-        for (int j = 0; j < array.GetLength(0); j++) {
-            sum += array[j,i];
-        }
-        average = (double)sum/array.GetLength(0);
-        Console.WriteLine($"Среднее арифметическое элементов столбца №{i+1} = {Math.Round(average, 2)}");
-    }
-    PrintArrayInt(array);    
+void Zadacha56() {
+    Console.WriteLine("Задача 56. Задайте прямоугольный двумерный массив. Напишите программу, которая будет находить строку с наименьшей суммой элементов.");
+    var rand = new Random();
+    int[,] array = new int[rand.Next(2, 10),rand.Next(2, 10)]; 
+    FillArray(array);
+    Console.WriteLine("Был сформирован следующий массив:");
+    PrintArrayInt(array);   
+    FindLessLine(FindSumsOfLines(array));
+    Console.WriteLine();  
 }
 
-void CheckPosition(int[,] array) {
-    Console.WriteLine("Укажите номер строки:");
-    int row = Convert.ToInt32(Console.ReadLine());
-    Console.WriteLine("Укажите номер столбца:");
-    int column = Convert.ToInt32(Console.ReadLine());
+void Zadacha58() {
+    Console.WriteLine("Задача 58. Заполните спирально массив 4 на 4 числами от 1 до 16.");
+    Console.WriteLine("Введите число Х от 2 до 10. Будет сформирован массив размерности X*X");
+    int size = Convert.ToInt32(Console.ReadLine());
+    int[,] array = new int[size,size];
+    FillSpiral(array);
+    PrintArrayInt(array);
+    Console.WriteLine();  
+}
 
-    if  (row > array.GetLength(0)
-            || column > array.GetLength(1)) {
-                Console.WriteLine("Такого элемента нет в массиве, был сформирован такой массив:");
-                PrintArrayInt(array);
+void FillSpiral(int[,] array) {
+    int x = 0;
+    int y = 0;
+
+    array[x,y] = 1;
+    for (int counter = 2; counter < array.GetLength(0)*array.GetLength(1)+1; counter++) {
+        if (StepRight(array, x, y) == true) {
+            y++;
+            array[x,y] = counter;
+        } else if (StepDown(array, x, y) == true) {
+            x++;
+            array[x,y] = counter;
+        } else if (StepLeft(array, x, y) == true) {
+            y--;
+            array[x,y] = counter;
         } else {
-            Console.WriteLine("Значение этого элемента = " + array[row - 1, column - 1]);
-            Console.WriteLine("был сформирован такой массив:");
-            PrintArrayInt(array);            
+            array[x - 1, y] = counter;
+            x--;
+            while (array[x - 1, y] == 0) {
+                x--;
+                counter++;
+                array[x,y] = counter;
+            }
         }
+    }    
+}
+
+bool StepRight(int[,]array, int x, int y) {
+    if (y + 1 < array.GetLength(1) && array[x, y + 1] == 0) return true;
+    else return false;
+}
+
+bool StepDown(int[,]array, int x, int y) {
+    if (x + 1 < array.GetLength(0) && array[x + 1, y] == 0) return true;
+    else return false;
+}
+
+bool StepLeft(int[,]array, int x, int y) {
+    if (y - 1 >= 0 && array[x, y - 1] == 0) return true;
+    else return false;
+}
+
+int[] FindSumsOfLines(int[,] array) {
+    int[] sums = new int[array.GetLength(0)];
+    int sum = 0;
+    for (int i = 0; i < array.GetLength(0); i++) {
+        sum = 0;
+        for (int j = 0; j < array.GetLength(1); j++) {
+            sum += array[i,j];
+        }
+        sums[i] = sum;
+    }
+    return sums;
+}
+
+void FindLessLine(int[] array) {
+    int min = array[0];
+    int position = 0;
+    for (int i = 1;i < array.Length; i++ ) {
+        if (array[i] < min) {
+            min = array[i];
+            position = i;
+        }            
+    }
+    Console.WriteLine($"Наименьшая сумма элементов в строке №{position + 1} = {array[position]}");
 }
 
 int[,] FillArray(int[,] array) {
@@ -65,33 +110,6 @@ int[,] FillArray(int[,] array) {
     return array;
 }
 
-double[,] CreateUserArray() {
-    Console.WriteLine("Задайте число m - количество строк массива");
-    int m = Convert.ToInt32(Console.ReadLine());
-    Console.WriteLine("Задайте число n - количество колонок массива");
-    int n = Convert.ToInt32(Console.ReadLine());
-
-    //Фомируем массив вещественных чисел в диапазоне (-10; 10)
-    Random rand = new Random();
-    double[,] array = new double[m,n];
-    for (int i = 0; i < m; i++) {
-        for (int j = 0; j < n; j++) {
-            array[i,j] = rand.NextDouble()*15-10;
-        }
-    }  
-    return array;  
-}
-
-void PrintArrayDouble(double[,] array) {
-    Console.WriteLine("Выводим массив:");
-    for (int i = 0; i < array.GetLength(0); i++) {
-        for (int j = 0; j < array.GetLength(1); j++) {
-            Console.Write(Math.Round(array[i,j], 2) + "\t");
-        }
-        Console.WriteLine();
-    }  
-}
-
 void PrintArrayInt(int[,] array) {
     Console.WriteLine("Выводим массив:");
     for (int i = 0; i < array.GetLength(0); i++) {
@@ -102,6 +120,40 @@ void PrintArrayInt(int[,] array) {
     }  
 }
 
-Zadacha47();
-Zadacha50();
-Zadacha52();
+int[,] SortMaxToMin(int[,] array) {
+    int[] line = new int[array.GetLength(1)];
+    for (int i = 0; i < array.GetLength(0); i++) {
+        for (int j = 0; j < array.GetLength(1); j++) {
+            line[j] = array[i,j];
+        }
+        SortLine(line);
+        for (int j = 0; j < array.GetLength(1); j++) {
+            array[i,j] = line[j];
+        }
+    }
+    return array;
+}
+
+int[] SortLine(int[] array) {
+    int max = array[0];
+    int temp = array[0];
+    int position = 0;
+    for (int i = 0; i < array.Length; i++) {
+        max = array[i];
+        temp = array[i];
+        position = i;
+        for (int j = i + 1;j < array.Length; j++ ) {
+            if (array[j] > max) {
+                max = array[j];
+                position = j;
+            }            
+        }
+        array[i] = max;
+        array[position] = temp;
+    }
+    return array;
+}
+
+Zadacha54();
+Zadacha56();
+Zadacha58();
